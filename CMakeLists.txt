@@ -48,28 +48,27 @@ add_subdirectory(src) # Sources list
 add_subdirectory(doc) # Documentation
 add_subdirectory(pkg) # Packaging
 
-## Shared libraries
-#pkg_check_modules(shared
-#	REQUIRED IMPORTED_TARGET
-#		libfoo1
-#		libfoo2
-#)
-#
+# Shared libraries
+pkg_check_modules(shared
+	REQUIRED IMPORTED_TARGET
+		gtkmm-4.0
+)
+
 ## Header only libraries
 #pkg_check_modules(header_only
 #	REQUIRED IMPORTED_TARGET
 #		libfoo3
 #		libfoo4
 #)
-#
-## Linking
-#target_link_libraries(${PROJECT_NAME}
-#	PRIVATE
-#		PkgConfig::shared
-#
+
+# Linking
+target_link_libraries(${PROJECT_NAME}
+	PRIVATE
+		PkgConfig::shared
+
 #	INTERFACE
 #		PkgConfig::header_only
-#)
+)
 
 # Default flags
 if(UNIX)
