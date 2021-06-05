@@ -1,7 +1,7 @@
 # Maintainer: Otreblan <otreblain@gmail.com>
 
 pkgname=hello-git
-pkgver=v4.0.r21.g2684a5d
+pkgver=v4.0.r27.g1a222b0
 pkgrel=1
 epoch=
 pkgdesc="A C++ template"
@@ -9,7 +9,7 @@ arch=('x86_64')
 url="https://github.com/otreblan/hello"
 license=('GPL3')
 groups=()
-depends=('gcc-libs')
+depends=('gcc-libs' 'gtkmm-4.0')
 makedepends=('git' 'asciidoctor' 'cmake')
 checkdepends=()
 optdepends=()
@@ -37,7 +37,6 @@ build() {
 
 	cmake \
 		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_UNITY_BUILD=ON \
 		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 		..

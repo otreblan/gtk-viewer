@@ -73,7 +73,6 @@ HelloWorld::HelloWorld():
 	vbox.set_valign(Gtk::Align::CENTER);
 
 	set_child(vbox);
-
 }
 
 HelloWorld::~HelloWorld()
