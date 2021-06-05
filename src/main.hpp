@@ -4,6 +4,7 @@
 #include <gtkmm/window.h>
 #include <gtkmm/picture.h>
 #include <gtkmm/progressbar.h>
+#include <gtkmm/headerbar.h>
 
 #include <giomm/inputstream.h>
 
@@ -19,6 +20,8 @@ public:
 protected:
   //Signal handlers:
   bool read_file(Glib::IOCondition io_condition);
+
+  Gtk::HeaderBar header_bar;
 
   //Member widgets:
   Gtk::Box vbox;

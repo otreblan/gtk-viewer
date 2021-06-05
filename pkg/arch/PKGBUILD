@@ -1,7 +1,7 @@
 # Maintainer: Otreblan <otreblain@gmail.com>
 
 pkgname=hello-git
-pkgver=v4.0.r27.g1a222b0
+pkgver=v4.0.r28.g3899b51
 pkgrel=1
 epoch=
 pkgdesc="A C++ template"

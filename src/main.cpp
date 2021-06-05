@@ -61,6 +61,8 @@ HelloWorld::HelloWorld():
 			Glib::IOCondition::IO_HUP
 		);
 
+	set_title("Render view");
+
 	picture.set_margin(10);
 	picture.set_alternative_text("Preview");
 
@@ -72,6 +74,7 @@ HelloWorld::HelloWorld():
 	vbox.append(bar);
 	vbox.set_valign(Gtk::Align::CENTER);
 
+	set_titlebar(header_bar);
 	set_child(vbox);
 }
 
@@ -107,7 +110,7 @@ bool HelloWorld::read_file(Glib::IOCondition io_condition)
 
 int main(int argc, char* argv[])
 {
-	auto app = Gtk::Application::create("org.gtkmm.example");
+	auto app = Gtk::Application::create("org.gtkmm.example", Gio::Application::Flags::NON_UNIQUE);
 
 	//Shows the window and returns when it is closed.
 	return app->make_window_and_run<HelloWorld>(argc, argv);
