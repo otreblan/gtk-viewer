@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gtkmm/button.h>
+#include <gtkmm/box.h>
 #include <gtkmm/window.h>
 #include <gtkmm/picture.h>
 #include <gtkmm/progressbar.h>
@@ -18,13 +18,12 @@ public:
 
 protected:
   //Signal handlers:
-  void on_button_clicked();
   bool read_file(Glib::IOCondition io_condition);
 
   //Member widgets:
-  Gtk::Button m_button;
+  Gtk::Box vbox;
   Gtk::Picture picture;
-  //Gtk::ProgressBar bar;
+  Gtk::ProgressBar bar;
 
   Glib::RefPtr<Glib::IOChannel> io_channel;
   Glib::RefPtr<Gdk::PixbufLoader> loader;

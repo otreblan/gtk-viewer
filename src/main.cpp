@@ -5,13 +5,9 @@
 
 #include <iostream>
 
-HelloWorld::HelloWorld(): m_button("Hello World")
+HelloWorld::HelloWorld():
+	vbox(Gtk::Orientation::VERTICAL)
 {
-	picture.set_margin(10);
-	picture.set_alternative_text("Preview");
-
-	//picture.set_filename("/dev/stdin");
-
 	loader = Gdk::PixbufLoader::create();
 	if(!loader)
 		return;
@@ -19,29 +15,38 @@ HelloWorld::HelloWorld(): m_button("Hello World")
 	loader->signal_area_prepared().connect(
 		[&]()
 		{
-			if(!loader)
-				return;
+			if(!loader) return;
 
 			auto pixbuf = loader->get_pixbuf();
 
-			if(!pixbuf)
-				return;
+			if(!pixbuf) return;
 
 			pixbuf->fill(0);
 			picture.set_pixbuf(pixbuf);
+
+			bar.set_fraction(0.0);
 		}
 	);
 
 	loader->signal_area_updated().connect(
-		[&](int, int, int, int)
+		[&](int, int y, int, int)
 		{
-			if(!loader)
-				return;
+			if(!loader) return;
+
+			auto pixbuf = loader->get_pixbuf();
+
+			if(!pixbuf) return;
+
+			bar.set_fraction((double)y/pixbuf->get_height());
 
 			picture.set_pixbuf(nullptr);
-			picture.set_pixbuf(loader->get_pixbuf());
+			picture.set_pixbuf(pixbuf);
 		}
 	);
+
+	io_channel = Glib::IOChannel::create_from_fd(STDIN_FILENO);
+	io_channel->set_encoding("");
+	io_channel->set_flags(Glib::IOFlags::NONBLOCK);
 
 	Glib::signal_io()
 		.connect(
@@ -49,15 +54,26 @@ HelloWorld::HelloWorld(): m_button("Hello World")
 			{
 				return read_file(io_condition);
 			},
-			STDIN_FILENO,
-			Glib::IOCondition::IO_IN
+			io_channel,
+			Glib::IOCondition::IO_IN |
+			Glib::IOCondition::IO_PRI |
+			Glib::IOCondition::IO_ERR |
+			Glib::IOCondition::IO_HUP
 		);
 
-	io_channel = Glib::IOChannel::create_from_fd(STDIN_FILENO);
-	io_channel->set_encoding("");
-	io_channel->set_flags(Glib::IOFlags::NONBLOCK);
+	picture.set_margin(10);
+	picture.set_alternative_text("Preview");
 
-	set_child(picture);
+	bar.set_margin(10);
+	bar.set_text("Rendering");
+	bar.set_show_text(true);
+
+	vbox.append(picture);
+	vbox.append(bar);
+	vbox.set_valign(Gtk::Align::CENTER);
+
+	set_child(vbox);
+
 }
 
 HelloWorld::~HelloWorld()
@@ -71,7 +87,7 @@ bool HelloWorld::read_file(Glib::IOCondition io_condition)
 
 	if((io_condition & Glib::IOCondition::IO_IN) != Glib::IOCondition::IO_IN)
 	{
-		std::cerr << "End file\n";
+		vbox.remove(bar);
 		return false;
 	}
 	else
@@ -80,17 +96,14 @@ bool HelloWorld::read_file(Glib::IOCondition io_condition)
 		char buffer[PIPE_BUF];
 
 		if(io_channel->read(buffer, sizeof(buffer), size) == Glib::IOStatus::ENDOFFILE)
+		{
 			return false;
+		}
 
 		loader->write((guint8*)buffer, size);
 	}
 
 	return true;
-}
-
-void HelloWorld::on_button_clicked()
-{
-	std::cout << "Hello World" << std::endl;
 }
 
 int main(int argc, char* argv[])
