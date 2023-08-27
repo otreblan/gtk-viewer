@@ -16,10 +16,10 @@
 
 cmake_minimum_required(VERSION 3.13.0)
 
-project(hello
+project(gtk-viewer
 	VERSION 4.0
-	DESCRIPTION "A C++ template"
-	HOMEPAGE_URL "https://github.com/otreblan/hello"
+	DESCRIPTION "A live image viewer"
+	HOMEPAGE_URL "https://github.com/otreblan/gtk-viewer"
 )
 
 # Without this, paths are not relative in the sources list
