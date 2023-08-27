@@ -86,7 +86,6 @@ HelloWorld::~HelloWorld()
 
 bool HelloWorld::read_file(Glib::IOCondition io_condition)
 {
-
 	if((io_condition & Glib::IOCondition::IO_IN) != Glib::IOCondition::IO_IN)
 	{
 		vbox.remove(bar);
