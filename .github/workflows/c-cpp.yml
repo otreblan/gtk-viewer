@@ -15,7 +15,7 @@ jobs:
     - uses: ammaraskar/gcc-problem-matcher@master
 
     - name: deps
-      run: sudo apt install asciidoctor
+      run: sudo apt install asciidoctor libgtkmm-4.0-dev
 
     - name: configure
       run: cmake
