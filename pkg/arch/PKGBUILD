@@ -1,7 +1,7 @@
 # Maintainer: Otreblan <otreblain@gmail.com>
 
 pkgname=gtk-viewer-git
-pkgver=v4.0.r28.g3899b51
+pkgver=v4.0.r31.ge2edd6e
 pkgrel=1
 epoch=
 pkgdesc="A live image viewer"

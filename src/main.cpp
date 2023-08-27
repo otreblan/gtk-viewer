@@ -2,6 +2,7 @@
 
 #include <glibmm/iochannel.h>
 #include <glibmm/main.h>
+#include <gtkmm/application.h>
 
 #include <iostream>
 
